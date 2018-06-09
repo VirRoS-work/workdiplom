@@ -13,6 +13,11 @@ public class Keyword implements Serializable {
         this.title = title;
     }
 
+    public Keyword(long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,9 +42,9 @@ public class Keyword implements Serializable {
 
     @Override
     public String toString() {
-        return "Keyword{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+        return "{" +
+                "id : " + id +
+                ", title : '" + title + '\'' +
                 '}';
     }
 }

@@ -1,41 +1,49 @@
 package test;
 
+import com.google.gson.Gson;
 import model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import service.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Test {
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
+
+        Gson gson = new Gson();
+
+        GenericService<Applicant, Long> service = new ApplicantService();
+        GenericService<PersonalData, Long> pers = new PersonDataService();
+        GenericService<Language, Long> lang = new LanguageService();
+        GenericService<Specialization, Long> special = new SpecializationService();
+        GenericService<Experience, Long> exp = new ExperienceService();
+        GenericService<Education, Long> ed = new EducationService();
+        GenericService<Contact, Long> cont = new ContactService();
+        GenericService<Summary, Long> summ = new SummaryService();
+        GenericService<Employer, Long> emp = new EmployerService();
+        GenericService<Office, Long> off = new OfficeService();
+        GenericService<Vacancy, Long> vac = new VacancyService();
+        GenericService<Keyword, Long> key = new KeywordService();
+
+        System.out.println("------------------------------------------------------------------------------------------");
+
+//        Applicant applicant = new Applicant();
+//        applicant.setLogin("admin");
+//        applicant.setPassword("admin");
+//        applicant.setFirst_name("Иван");
+//        applicant.setLast_name("Иванов");
+//        applicant.setEmail("asd@mail.ru");
+//        applicant.setPhone_number("+79998885522");
+//        applicant.setPol((byte) 1);
 //
-//        GenericService<Applicant, Long> service = new ApplicantService();
-//        GenericService<PersonalData, Long> pers = new PersonDataService();
-//        GenericService<Language, Long> lang = new LanguageService();
-//        GenericService<Specialization, Long> special = new SpecializationService();
-//        GenericService<Experience, Long> exp = new ExperienceService();
-//        GenericService<Education, Long> ed = new EducationService();
-//        GenericService<Contact, Long> cont = new ContactService();
-//        GenericService<Summary, Long> summ = new SummaryService();
-////
-////        System.out.println("------------------------------------------------------------------------------------------");
-////
-////        Applicant applicant = new Applicant();
-////        applicant.setLogin("admin");
-////        applicant.setPassword("admin");
-////        applicant.setFirst_name("Иван");
-////        applicant.setLast_name("Иванов");
-////        applicant.setEmail("asd@mail.ru");
-////        applicant.setPhone_number("+79998885522");
-////        applicant.setPol((byte) 1);
-////
-////        service.save(applicant);
-////
+//        service.save(applicant);
+
 ////
 ////        Applicant applicant1 = service.getObjectByPk((long) 1);
 ////        if(applicant1 != null) System.out.println(applicant1.toString());
@@ -90,58 +98,74 @@ public class Test {
 ////
 ////
 ////
-////        GenericService<Employer, Long> emp = new EmployerService();
-////        GenericService<Office, Long> off = new OfficeService();
-////        GenericService<Vacancy, Long> vac = new VacancyService();
-////        GenericService<Keyword, Long> key = new KeywordService();
-////
-////        ContactPerson contactPerson = new ContactPerson();
-////        contactPerson.setFirst_name("Иван");
-////        contactPerson.setLast_name("Иванов");
-////        contactPerson.setEmail("qwerty@mail.ru");
-////
-////        Employer employer = new Employer();
-////        employer.setName("NeoFlex");
-////        employer.setType("ЗАО");
-////        employer.setNumber_of_person((byte) 4);
-////        employer.setSite("http://google.ru");
-////        employer.setContact_person(contactPerson);
-////        emp.save(employer);
-////
-////        Employer employer1 = emp.getObjectByPk((long) 1);
-////
-////
-////
-////
-////        Office office = new Office();
-////        office.setAddress("fdsssssssssssss");
-////        office.setDescription("sdafsa");
-////        office.setEmployer(employer1);
-////        Office office1 = new Office();
-////        office1.setAddress("sdfsdgfs");
-////        office1.setDescription("asdfffffffffff");
-////        office1.setEmployer(employer1);
-////        off.save(office);
-////        off.save(office1);
+
+
+//        ContactPerson contactPerson = new ContactPerson();
+//        contactPerson.setFirst_name("Иван");
+//        contactPerson.setLast_name("Иванов");
+//        contactPerson.setEmail("qwerty@mail.ru");
+//
+//        Employer employer = new Employer();
+//        employer.setName("NeoFlex");
+//        employer.setType("ЗАО");
+//        employer.setNumber_of_person((byte) 4);
+//        employer.setSite("http://google.ru");
+//        employer.setContact_person(contactPerson);
+//        emp.save(employer);
+
+//        Employer employer1 = emp.getObjectByPk((long) 1);
+//        employer1.setVacancies(null);
+//        List<Office> offices = new ArrayList<Office>();
+//        for (Office o: employer1.getOffices()) {
+//            o.setEmployer(null);
+//            offices.add(o);
+//            System.out.println(o);
+//        }
+//        System.out.println(gson.toJson(offices));
 ////
 ////
-////        Keyword keyword = new Keyword("1111");
-////        Keyword keyword1 = new Keyword("2222");
-////        key.save(keyword);
-////        //key.save(keyword1);
-////
-////        Set<Keyword> keywords = new HashSet<Keyword>();
-////        keywords.add(key.getObjectByPk((long) 1));
-////        //keywords.add(key.getObjectByPk((long) 2));
-////        keywords.add(keyword1);
 ////
 ////
-////        Vacancy vacancy = new Vacancy();
-////        vacancy.setStatus((byte) 1);
-////        vacancy.setTitle("Вакансия 1");
-////        vacancy.setEmployer(employer1);
-////        vacancy.setKeywords(keywords);
-////        vac.save(vacancy);
+//        Office office = new Office();
+//        office.setAddress("fdsssssssssssss");
+//        office.setDescription("sdafsa");
+//        office.setEmployer(employer1);
+//        Office office1 = new Office();
+//        office1.setAddress("sdfsdgfs");
+//        office1.setDescription("asdfffffffffff");
+//        office1.setEmployer(employer1);
+//        off.save(office);
+//        off.save(office1);
+////
+////
+//        Keyword keyword = new Keyword("1111");
+//        Keyword keyword1 = new Keyword("2222");
+//        key.save(keyword);
+//        key.save(keyword1);
+//        key.save(keyword);
+//        key.save(keyword1);
+//        key.save(keyword);
+//        key.save(keyword1);
+//        key.save(keyword);
+//        key.save(keyword1);
+//        key.save(keyword);
+//        key.save(keyword1);
+//        key.save(keyword);
+//        key.save(keyword1);
+//
+//        System.out.println(gson.toJson(key.getAll()));
+////
+//        Set<Keyword> keywords = new HashSet<Keyword>();
+//        keywords.add(key.getObjectByPk((long) 4));
+//        keywords.add(key.getObjectByPk((long) 3));
+//
+//
+//        Vacancy vacancy = new Vacancy();
+//        vacancy.setStatus((byte) 1);
+//        vacancy.setTitle("Вакансия 2");
+//        vacancy.setEmployer(employer1);
+//        vacancy.setKeywords(keywords);
+//        vac.save(vacancy);
 ////
 ////
 ////        Summary summary = new Summary();
@@ -166,6 +190,15 @@ public class Test {
 ////        System.out.println(summ.getObjectByPk((long) 1).toString());
 //
 //
+
+//        System.out.println(gson.toJson(vacancies));
+
+
+
+//        Gson gson = new Gson();
 //
-//    }
+//        System.out.println(gson.toJson(key.getAll()));
+//
+//
+    }
 }

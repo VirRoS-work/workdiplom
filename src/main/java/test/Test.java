@@ -12,25 +12,26 @@ import java.util.*;
 
 public class Test {
 
-//    public static void main(String[] args) {
-//
-//        Gson gson = new Gson();
-//
-//        GenericService<Applicant, Long> service = new ApplicantService();
-//        GenericService<PersonalData, Long> pers = new PersonDataService();
-//        GenericService<Language, Long> lang = new LanguageService();
-//        GenericService<Specialization, Long> special = new SpecializationService();
-//        GenericService<Experience, Long> exp = new ExperienceService();
-//        GenericService<Education, Long> ed = new EducationService();
-//        GenericService<Contact, Long> cont = new ContactService();
-//        GenericService<Summary, Long> summ = new SummaryService();
-//        GenericService<Employer, Long> emp = new EmployerService();
-//        GenericService<Office, Long> off = new OfficeService();
-//        GenericService<Vacancy, Long> vac = new VacancyService();
-//        GenericService<Keyword, Long> key = new KeywordService();
-//
-//        System.out.println("------------------------------------------------------------------------------------------");
-//
+    public static void main(String[] args) {
+
+        Gson gson = new Gson();
+
+        GenericService<Applicant, Long> service = new ApplicantService();
+        GenericService<PersonalData, Long> pers = new PersonDataService();
+        GenericService<Language, Long> lang = new LanguageService();
+        GenericService<Specialization, Long> special = new SpecializationService();
+        GenericService<Experience, Long> exp = new ExperienceService();
+        GenericService<Education, Long> ed = new EducationService();
+        GenericService<Contact, Long> cont = new ContactService();
+        GenericService<ContactType, Long> conttype = new ContactTypeService();
+        GenericService<Summary, Long> summ = new SummaryService();
+        GenericService<Employer, Long> emp = new EmployerService();
+        GenericService<Office, Long> off = new OfficeService();
+        GenericService<Vacancy, Long> vac = new VacancyService();
+        GenericService<Keyword, Long> key = new KeywordService();
+
+        System.out.println("------------------------------------------------------------------------------------------");
+
 //        Employer employer = new Employer();
 //        employer.setLogin("admin2");
 //        employer.setPassword("admin2");
@@ -108,12 +109,26 @@ public class Test {
 //        education.setForm_training("Очная");
 //        education.setApplicant(applicant1);
 //
-//        ContactType contactType = new ContactType("vk");
+//        ContactType contactType = new ContactType();
+//        contactType.setName("vk");
+//        ContactType contactType1 = new ContactType();
+//        contactType1.setName("telegram");
+//        conttype.save(contactType);
+//        conttype.save(contactType1);
+//
+//        ContactType ct1 = conttype.getObjectByPk((long) 1);
+//        ContactType ct2 = conttype.getObjectByPk((long) 2);
+//
 //        Contact contact = new Contact();
-//        contact.setContact_type(contactType);
+//        contact.setContact_type(ct1);
 //        contact.setValue("1");
 //        contact.setApplicant(applicant1);
+//        Contact contact1 = new Contact();
+//        contact1.setValue("2");
+//        contact1.setContact_type(ct2);
+//        contact1.setEmployer(employer1);
 //        cont.save(contact);
+//        cont.save(contact1);
 //
 //        Summary summary = new Summary();
 //        summary.setAbout_me("sdf");
@@ -121,5 +136,6 @@ public class Test {
 //        summary.setApplicant(applicant1);
 //        summary.setFamily_status((byte) 1);
 //        summ.save(summary);
-//    }
+
+    }
 }

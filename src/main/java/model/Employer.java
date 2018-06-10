@@ -10,16 +10,16 @@ public class Employer implements Serializable {
     public Employer() {
     }
 
-    public Employer(String login, String password, String name, String type, String site, byte number_of_person, ContactPerson contact_person, Set<Office> offices, Set<Vacancy> vacancies) {
+    public Employer(String login, String password, String name, String type, byte number_of_person, ContactPerson contact_person, Set<Office> offices, Set<Vacancy> vacancies, Set<Contact> contacts) {
         this.login = login;
         this.password = password;
         this.name = name;
         this.type = type;
-        this.site = site;
         this.number_of_person = number_of_person;
         this.contact_person = contact_person;
         this.offices = offices;
         this.vacancies = vacancies;
+        this.contacts = contacts;
     }
 
     @Id
@@ -38,8 +38,6 @@ public class Employer implements Serializable {
     @Column(nullable = false)
     private String type;
 
-    private String site;
-
     @Column(nullable = false)
     private byte number_of_person;
 
@@ -52,6 +50,9 @@ public class Employer implements Serializable {
 
     @OneToMany(mappedBy = "employer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Vacancy> vacancies;
+
+    @OneToMany(mappedBy = "employer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Contact> contacts;
 
     public long getId() {
         return id;
@@ -75,14 +76,6 @@ public class Employer implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
     }
 
     public byte getNumber_of_person() {
@@ -133,6 +126,14 @@ public class Employer implements Serializable {
         this.password = password;
     }
 
+    public Set<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public String toString() {
         return "Employer{" +
@@ -141,10 +142,10 @@ public class Employer implements Serializable {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", site='" + site + '\'' +
                 ", number_of_person=" + number_of_person +
                 ", contact_person=" + contact_person +
                 ", offices=" + offices +
+                ", contacts=" + contacts +
                 '}';
     }
 }

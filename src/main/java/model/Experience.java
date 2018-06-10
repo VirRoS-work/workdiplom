@@ -24,19 +24,23 @@ public class Experience implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String conpany_name;
 
+    @Column(nullable = false)
     private String position;
 
+    @Column(nullable = false)
     private Date date_start;
 
+    @Column(nullable = false)
     private Date date_end;
 
     private String duties;
 
     private String achievements;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

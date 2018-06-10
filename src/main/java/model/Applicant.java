@@ -11,7 +11,7 @@ public class Applicant implements Serializable{
     public Applicant() {
     }
 
-    public Applicant(String login, String password, String first_name, String last_name, String father_name, byte pol, Date date_of_birth, String email, String phone_number, PersonalData personal_data, Set<Language> languages, Specialization specialization, Experience experience, Education education, Set<Contact> contacts, Set<Summary> summaries) {
+    public Applicant(String login, String password, String first_name, String last_name, String father_name, byte pol, Date date_of_birth, String email, String phone_number, PersonalData personal_data, Set<Language> languages, Specialization specialization, Set<Experience> experiences, Set<Education> educations, Set<Contact> contacts, Set<Summary> summaries) {
         this.login = login;
         this.password = password;
         this.first_name = first_name;
@@ -24,8 +24,8 @@ public class Applicant implements Serializable{
         this.personal_data = personal_data;
         this.languages = languages;
         this.specialization = specialization;
-        this.experience = experience;
-        this.education = education;
+        this.experiences = experiences;
+        this.educations = educations;
         this.contacts = contacts;
         this.summaries = summaries;
     }
@@ -68,11 +68,11 @@ public class Applicant implements Serializable{
     @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Specialization specialization;
 
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Experience experience;
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Experience> experiences;
 
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Education education;
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Education> educations;
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Contact> contacts;
@@ -184,20 +184,28 @@ public class Applicant implements Serializable{
         this.specialization = specialization;
     }
 
-    public Experience getExperience() {
-        return experience;
+    public Set<Experience> getExperiences() {
+        return experiences;
     }
 
-    public void setExperience(Experience experience) {
-        this.experience = experience;
+    public void setExperiences(Set<Experience> experiences) {
+        this.experiences = experiences;
     }
 
-    public Education getEducation() {
-        return education;
+    public Set<Summary> getSummaries() {
+        return summaries;
     }
 
-    public void setEducation(Education education) {
-        this.education = education;
+    public void setSummaries(Set<Summary> summaries) {
+        this.summaries = summaries;
+    }
+
+    public Set<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(Set<Education> educations) {
+        this.educations = educations;
     }
 
     public Set<Contact> getContacts() {
@@ -224,8 +232,8 @@ public class Applicant implements Serializable{
                 ", personal_data=" + personal_data +
                 ", languages=" + languages +
                 ", specialization=" + specialization +
-                ", experience=" + experience +
-                ", education=" + education +
+                ", experiences=" + experiences +
+                ", educations=" + educations +
                 ", contacts=" + contacts +
                 '}';
     }

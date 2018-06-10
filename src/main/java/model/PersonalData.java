@@ -19,7 +19,7 @@ public class PersonalData implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

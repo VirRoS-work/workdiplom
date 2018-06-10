@@ -10,10 +10,12 @@ public class Education implements Serializable {
     public Education() {
     }
 
-    public Education(String educational_institution, String faculty, String specialization, Date date_start, Date date_end, Applicant applicant) {
+    public Education(String level_education, String educational_institution, String faculty, String specialization, String form_training, Date date_start, Date date_end, Applicant applicant) {
+        this.level_education = level_education;
         this.educational_institution = educational_institution;
         this.faculty = faculty;
         this.specialization = specialization;
+        this.form_training = form_training;
         this.date_start = date_start;
         this.date_end = date_end;
         this.applicant = applicant;
@@ -23,17 +25,28 @@ public class Education implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
+    private String level_education;
+
+    @Column(nullable = false)
     private String educational_institution;
 
+    @Column(nullable = false)
     private String faculty;
 
+    @Column(nullable = false)
     private String specialization;
 
+    @Column(nullable = false)
+    private String form_training;
+
+    @Column(nullable = false)
     private Date date_start;
 
+    @Column(nullable = false)
     private Date date_end;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
@@ -93,13 +106,31 @@ public class Education implements Serializable {
         this.applicant = applicant;
     }
 
+    public String getLevel_education() {
+        return level_education;
+    }
+
+    public void setLevel_education(String level_education) {
+        this.level_education = level_education;
+    }
+
+    public String getForm_training() {
+        return form_training;
+    }
+
+    public void setForm_training(String form_training) {
+        this.form_training = form_training;
+    }
+
     @Override
     public String toString() {
         return "Education{" +
                 "id=" + id +
+                ", level_education='" + level_education + '\'' +
                 ", educational_institution='" + educational_institution + '\'' +
                 ", faculty='" + faculty + '\'' +
                 ", specialization='" + specialization + '\'' +
+                ", form_training='" + form_training + '\'' +
                 ", date_start=" + date_start +
                 ", date_end=" + date_end +
                 '}';

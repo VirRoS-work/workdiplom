@@ -10,7 +10,9 @@ public class Employer implements Serializable {
     public Employer() {
     }
 
-    public Employer(String name, String type, String site, byte number_of_person, ContactPerson contact_person, Set<Office> offices, Set<Vacancy> vacancies) {
+    public Employer(String login, String password, String name, String type, String site, byte number_of_person, ContactPerson contact_person, Set<Office> offices, Set<Vacancy> vacancies) {
+        this.login = login;
+        this.password = password;
         this.name = name;
         this.type = type;
         this.site = site;
@@ -20,28 +22,28 @@ public class Employer implements Serializable {
         this.vacancies = vacancies;
     }
 
-    public Employer(String name, String type, String site, byte number_of_person, ContactPerson contact_person, Set<Office> offices) {
-        this.name = name;
-        this.type = type;
-        this.site = site;
-        this.number_of_person = number_of_person;
-        this.contact_person = contact_person;
-        this.offices = offices;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
+    private String login;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String type;
 
     private String site;
 
+    @Column(nullable = false)
     private byte number_of_person;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "contact_person_id")
     private ContactPerson contact_person;
 
@@ -115,16 +117,34 @@ public class Employer implements Serializable {
         this.vacancies = vacancies;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "Employer{" +
                 "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", site='" + site + '\'' +
                 ", number_of_person=" + number_of_person +
                 ", contact_person=" + contact_person +
-                ", office=" + offices +
+                ", offices=" + offices +
                 '}';
     }
 }

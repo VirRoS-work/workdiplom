@@ -27,10 +27,13 @@ public class Vacancy implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private byte status;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String description;
 
     private long salary_min;
@@ -43,7 +46,7 @@ public class Vacancy implements Serializable{
 
     private String field_of_activity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "employer_id")
     private Employer employer;
 

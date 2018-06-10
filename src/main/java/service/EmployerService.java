@@ -18,9 +18,15 @@ public class EmployerService implements GenericService<Employer, Long> {
         session.beginTransaction();
 
         if (employer.getId() == 0) {
+            employer.setPassword(DigestUtils.md5(employer.getPassword()).toString());
             session.save(employer);
         } else {
-            session.update(employer);
+            Employer e = getObjectByPk(employer.getId());
+            if(e == null){
+                employer.setLogin(e.getLogin());
+                employer.setPassword(e.getPassword());
+                session.update(employer);
+            }
         }
 
         session.getTransaction().commit();

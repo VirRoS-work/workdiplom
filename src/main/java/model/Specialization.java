@@ -21,15 +21,17 @@ public class Specialization implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String field_of_activity;
 
+    @Column(nullable = false)
     private String specialization;
 
     private boolean ready_to_move;
 
     private boolean ready_for_remove_work;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

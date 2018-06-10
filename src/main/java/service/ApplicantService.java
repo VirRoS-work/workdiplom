@@ -18,7 +18,7 @@ public class ApplicantService implements GenericService<Applicant, Long>{
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        applicant.setPassword(DigestUtils.md5(applicant.getPassword()).toString());
+        if(applicant.getPassword() != null) applicant.setPassword(DigestUtils.md5(applicant.getPassword()).toString());
 
         if (applicant.getId() == 0) {
             session.save(applicant);

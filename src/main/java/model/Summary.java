@@ -27,8 +27,10 @@ public class Summary implements Serializable {
 
     private long salary;
 
+    @Column(nullable = false)
     private String about_me;
 
+    @Column(nullable = false)
     private String City;
 
     private String citizenship;
@@ -37,7 +39,7 @@ public class Summary implements Serializable {
 
     private boolean children;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

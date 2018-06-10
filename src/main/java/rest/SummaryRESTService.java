@@ -2,35 +2,35 @@ package rest;
 
 import com.google.gson.Gson;
 import model.*;
-import service.ApplicantService;
+import service.EducationService;
 import service.GenericService;
+import service.SummaryService;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-import java.util.ArrayList;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Set;
 
-@Path("/applicant")
-public class ApplicantRESTService {
+@Path("/summary")
+public class SummaryRESTService {
 
     Gson gson = new Gson();
-    GenericService<Applicant, Long> service = new ApplicantService();
+    GenericService<Summary, Long> service = new SummaryService();
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplicant(@PathParam("id") String id){
+    public Response getSummary(@PathParam("id") String id){
 
-        Applicant applicant = service.getObjectByPk(Long.valueOf(id));
+        Summary summary = service.getObjectByPk(Long.valueOf(id));
 
-        if(applicant != null) return Response.ok(gson.toJson(getApplicant(applicant))).build();
+        if(summary != null) return Response.ok(gson.toJson(getSummary(summary))).build();
         return Response.status(204).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deleteApplicant(@PathParam("id") String id){
+    public Response deleteSummary(@PathParam("id") String id){
 
         if(service.getObjectByPk(Long.valueOf(id)) == null) return Response.status(204).build();
 
@@ -40,47 +40,35 @@ public class ApplicantRESTService {
     }
 
     @GET
-    @Path("/{id}/summaries")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplicantSummaries(@PathParam("id") String id){
-
-        Applicant applicant = service.getObjectByPk(Long.valueOf(id));
-
-        if(applicant != null) {
-
-            Set<Summary> summaries = applicant.getSummaries();
-
-            for(Summary summary : summaries){
-                summary.setApplicant(null);
-            }
-
-            return Response.ok(gson.toJson(summaries)).build();
-        }
-        return Response.status(204).build();
-    }
-
-    @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplicants(){
+    public Response getSummaries(){
 
-        List<Applicant> educations = service.getAll();
-        for(Applicant applicant : educations){
-           getApplicant(applicant);
+        List<Summary> summaries = service.getAll();
+        for (Summary obj : summaries) {
+            obj = getSummary(obj);
         }
-        return Response.ok(gson.toJson(educations)).build();
+
+        return Response.ok(gson.toJson(summaries)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addApplicant(String applicant){
+    public Response addSummary(String summary){
 
-        Applicant obj = gson.fromJson(applicant, Applicant.class);
+        Summary obj = gson.fromJson(summary, Summary.class);
 
         if (obj.getId() != 0 && service.getObjectByPk(obj.getId()) == null) return Response.status(400).build();
 
         service.save(obj);
         return Response.status(201).build();
+    }
+
+    private Summary getSummary(Summary summary){
+
+        summary.setApplicant(getApplicant(summary.getApplicant()));
+
+        return summary;
     }
 
     private Applicant getApplicant(Applicant applicant){

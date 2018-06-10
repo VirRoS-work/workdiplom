@@ -77,7 +77,7 @@ public class Applicant implements Serializable{
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Contact> contacts;
 
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Summary> summaries;
 
     public long getId() {

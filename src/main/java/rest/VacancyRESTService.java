@@ -20,14 +20,14 @@ import java.util.Set;
 public class VacancyRESTService {
 
     Gson gson = new Gson();
-    GenericService<Vacancy, Long> vac = new VacancyService();
+    GenericService<Vacancy, Long> service = new VacancyService();
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVacancy(@PathParam("id") String id){
 
-        Vacancy vacancy = vac.getObjectByPk(Long.valueOf(id));
+        Vacancy vacancy = service.getObjectByPk(Long.valueOf(id));
 
         if(vacancy != null) {
 
@@ -44,12 +44,23 @@ public class VacancyRESTService {
         return Response.status(204).build();
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response deleteSummary(@PathParam("id") String id){
+
+        if(service.getObjectByPk(Long.valueOf(id)) == null) return Response.status(204).build();
+
+        service.delete(Long.valueOf(id));
+
+        return Response.status(205).build();
+    }
+
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVacancies(){
 
-        List<Vacancy> vacancies = vac.getAll();
+        List<Vacancy> vacancies = service.getAll();
 
         for (Vacancy v: vacancies) {
             Employer employer = v.getEmployer();
@@ -66,7 +77,7 @@ public class VacancyRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addVacancy(String vacancy){
 
-        vac.save(gson.fromJson(vacancy, Vacancy.class));
+        service.save(gson.fromJson(vacancy, Vacancy.class));
 
         return Response.status(201).build();
     }

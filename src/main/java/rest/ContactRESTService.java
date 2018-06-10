@@ -21,7 +21,7 @@ public class ContactRESTService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getContactTupe(@PathParam("id") String id){
+    public Response getContact(@PathParam("id") String id){
 
         Contact contact = service.getObjectByPk(Long.valueOf(id));
 
@@ -34,7 +34,7 @@ public class ContactRESTService {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getContactTypes(){
+    public Response getContacts(){
 
         List<Contact> contacts = service.getAll();
         for (Contact c : contacts) {
@@ -43,6 +43,17 @@ public class ContactRESTService {
 
 
         return Response.ok(gson.toJson(contacts)).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteContact(@PathParam("id") String id){
+
+        if(service.getObjectByPk(Long.valueOf(id)) == null) return Response.status(204).build();
+
+        service.delete(Long.valueOf(id));
+
+        return Response.status(205).build();
     }
 
     @POST

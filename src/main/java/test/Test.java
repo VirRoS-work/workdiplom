@@ -107,7 +107,10 @@ public class Test {
 //        education.setSpecialization("ИФСТ");
 //        education.setLevel_education("Бакалавр");
 //        education.setForm_training("Очная");
+//        education.setDate_start(new Date(Calendar.getInstance().getTime().getTime()));
+//        education.setDate_end(new Date(Calendar.getInstance().getTime().getTime()));
 //        education.setApplicant(applicant1);
+//        ed.save(education);
 //
 //        ContactType contactType = new ContactType();
 //        contactType.setName("vk");
@@ -138,4 +141,5 @@ public class Test {
 //        summ.save(summary);
 
     }
+
 }

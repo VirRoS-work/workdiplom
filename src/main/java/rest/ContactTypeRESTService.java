@@ -26,6 +26,17 @@ public class ContactTypeRESTService {
         return Response.status(204).build();
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response deleteContactTupe(@PathParam("id") String id){
+
+        if(service.getObjectByPk(Long.valueOf(id)) == null) return Response.status(204).build();
+
+        service.delete(Long.valueOf(id));
+
+        return Response.status(205).build();
+    }
+
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)

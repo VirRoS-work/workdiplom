@@ -22,6 +22,7 @@ public class Keyword implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String title;
 
     public long getId() {

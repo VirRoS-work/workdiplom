@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import model.Employer;
 import model.Office;
+import model.SpecializationVacancy;
 import model.Vacancy;
 import service.EmployerService;
 import service.GenericService;
@@ -30,15 +31,7 @@ public class VacancyRESTService {
         Vacancy vacancy = service.getObjectByPk(Long.valueOf(id));
 
         if(vacancy != null) {
-
-            Employer employer = vacancy.getEmployer();
-            for (Office o : employer.getOffices()) {
-                o.setEmployer(null);
-            }
-            employer.setVacancies(null);
-            vacancy.setEmployer(employer);
-
-            return Response.ok(gson.toJson(vacancy)).build();
+            return Response.ok(gson.toJson(getVacancy(vacancy))).build();
         }
 
         return Response.status(204).build();
@@ -63,11 +56,7 @@ public class VacancyRESTService {
         List<Vacancy> vacancies = service.getAll();
 
         for (Vacancy v: vacancies) {
-            Employer employer = v.getEmployer();
-            employer.setVacancies(null);
-            for (Office o: employer.getOffices()) {
-                o.setEmployer(null);
-            }
+            v = getVacancy(v);
         }
 
         return Response.ok(gson.toJson(vacancies)).build();
@@ -77,8 +66,47 @@ public class VacancyRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addVacancy(String vacancy){
 
-        service.save(gson.fromJson(vacancy, Vacancy.class));
+        Vacancy vacancy1 = gson.fromJson(vacancy, Vacancy.class);
+
+        if (vacancy1.getOffice() != null && vacancy1.getOffice().getId() == 0){
+            vacancy1.setOffice(null);
+        }
+
+        service.save(vacancy1);
 
         return Response.status(201).build();
+    }
+
+    @PUT
+    @Path("/{id}/status")
+    public Response editStatusVacancy(@PathParam("id") String id){
+
+        if(service.getObjectByPk(Long.valueOf(id)) == null) return Response.status(204).build();
+        else {
+            Vacancy vacancy = service.getObjectByPk(Long.valueOf(id));
+            vacancy.setStatus("Активна".equals(vacancy.getStatus()) ? "Неактивна" : "Активна");
+            service.save(vacancy);
+        }
+
+        return Response.status(205).build();
+    }
+
+
+    private Vacancy getVacancy(Vacancy vacancy){
+        Employer employer = new Employer();
+        employer.setId(vacancy.getEmployer().getId());
+        vacancy.setEmployer(employer);
+
+        if(vacancy.getOffice() != null){
+            Office office = new Office();
+            office.setId(vacancy.getOffice().getId());
+            vacancy.setOffice(office);
+        }
+
+        for (SpecializationVacancy specializationVacancy : vacancy.getFields()){
+            specializationVacancy.setVacancy(null);
+        }
+
+        return vacancy;
     }
 }

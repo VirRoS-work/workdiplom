@@ -2,29 +2,29 @@ package rest;
 
 import com.google.gson.Gson;
 import model.Applicant;
-import model.Language;
+import model.LanguageSkill;
 import service.GenericService;
-import service.LanguageService;
+import service.LanguageSkillService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/language")
-public class LanguageRESTService {
+@Path("/languageskill")
+public class LanguageSkillRESTService {
 
     Gson gson = new Gson();
-    GenericService<Language, Long> service = new LanguageService();
+    GenericService<LanguageSkill, Long> service = new LanguageSkillService();
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLanguage(@PathParam("id") String id){
 
-        Language language = service.getObjectByPk(Long.valueOf(id));
+        LanguageSkill language = service.getObjectByPk(Long.valueOf(id));
 
-        if(language != null) return Response.ok(gson.toJson(language)).build();
+        if(language != null) return Response.ok(gson.toJson(getLanguageSkill(language))).build();
         return Response.status(204).build();
     }
 
@@ -44,7 +44,10 @@ public class LanguageRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLanguages(){
 
-        List<Language> languages = service.getAll();
+        List<LanguageSkill> languages = service.getAll();
+        for(LanguageSkill languageSkill : languages){
+            languageSkill = getLanguageSkill(languageSkill);
+        }
 
         return Response.ok(gson.toJson(languages)).build();
     }
@@ -53,7 +56,7 @@ public class LanguageRESTService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addLanguage(String language){
 
-        Language lang = gson.fromJson(language, Language.class);
+        LanguageSkill lang = gson.fromJson(language, LanguageSkill.class);
 
         if (lang.getId() != 0 && service.getObjectByPk(lang.getId()) == null) return Response.status(400).build();
 
@@ -61,4 +64,10 @@ public class LanguageRESTService {
         return Response.status(201).build();
     }
 
+    private LanguageSkill getLanguageSkill(LanguageSkill languageSkill){
+        Applicant applicant = new Applicant();
+        applicant.setId(languageSkill.getApplicant().getId());
+        languageSkill.setApplicant(applicant);
+        return languageSkill;
+    }
 }

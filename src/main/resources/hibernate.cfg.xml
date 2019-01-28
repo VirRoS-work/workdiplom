@@ -23,21 +23,29 @@
 
         <!-- Annotated entity classes -->
         <mapping class="model.Applicant"/>
-        <mapping class="model.PersonalData"/>
+        <!--<mapping class="model.PersonalData"/>-->
+        <mapping class="model.Sport"/>
+        <mapping class="model.SportSkill"/>
         <mapping class="model.Language"/>
-        <mapping class="model.Specialization"/>
+        <mapping class="model.LanguageSkill"/>
+        <!--<mapping class="model.Specialization"/>-->
         <mapping class="model.Experience"/>
         <mapping class="model.Education"/>
-        <mapping class="model.Contact"/>
+        <!--<mapping class="model.Contact"/>-->
         <mapping class="model.ContactType"/>
-        <mapping class="model.Summary"/>
+        <mapping class="model.ContactsContactPerson"/>
+        <mapping class="model.ContactsApplicant"/>
+        <!--<mapping class="model.Summary"/>-->
 
         <mapping class="model.Employer"/>
         <mapping class="model.ContactPerson"/>
         <mapping class="model.Office"/>
         <mapping class="model.Vacancy"/>
 
-        <mapping class="model.Keyword"/>
+        <!--<mapping class="model.Keyword"/>-->
+        <mapping class="model.FieldOfActivity"/>
+        <mapping class="model.SpecializationVacancy"/>
+        <mapping class="model.SpecializationApplicant"/>
 
     </session-factory>
 </hibernate-configuration>

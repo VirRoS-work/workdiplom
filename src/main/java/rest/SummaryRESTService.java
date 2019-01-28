@@ -76,29 +76,29 @@ public class SummaryRESTService {
         applicant.setLogin(null);
         applicant.setPassword(null);
 
-        if(applicant.getPersonal_data() != null) applicant.getPersonal_data().setApplicant(null);
-        if(applicant.getLanguages() != null){
-            for (Language obj: applicant.getLanguages()) {
-                obj.setApplicant(null);
-            }
-        }
-        if(applicant.getSpecialization() != null) applicant.getSpecialization().setApplicant(null);
-        if(applicant.getExperiences() != null){
-            for (Experience obj: applicant.getExperiences()) {
-                obj.setApplicant(null);
-            }
-        }
-        if(applicant.getEducations() != null){
-            for (Education obj: applicant.getEducations()) {
-                obj.setApplicant(null);
-            }
-        }
-        if(applicant.getContacts() != null){
-            for (Contact obj: applicant.getContacts()) {
-                obj.setApplicant(null);
-            }
-        }
-        applicant.setSummaries(null);
+//        if(applicant.getPersonal_data() != null) applicant.getPersonal_data().setApplicant(null);
+//        if(applicant.getLanguages() != null){
+//            for (Language obj: applicant.getLanguages()) {
+//                obj.setApplicant(null);
+//            }
+//        }
+//        if(applicant.getSpecialization() != null) applicant.getSpecialization().setApplicant(null);
+//        if(applicant.getExperiences() != null){
+//            for (Experience obj: applicant.getExperiences()) {
+//                obj.setApplicant(null);
+//            }
+//        }
+//        if(applicant.getEducations() != null){
+//            for (Education obj: applicant.getEducations()) {
+//                obj.setApplicant(null);
+//            }
+//        }
+//        if(applicant.getContacts() != null){
+//            for (Contact obj: applicant.getContacts()) {
+//                obj.setApplicant(null);
+//            }
+//        }
+//        applicant.setSummaries(null);
 
         return applicant;
     }

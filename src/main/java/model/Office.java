@@ -9,7 +9,8 @@ public class Office implements Serializable {
     public Office() {
     }
 
-    public Office(String address, String description, Employer employer) {
+    public Office(String city, String address, String description, Employer employer) {
+        this.city = city;
         this.address = address;
         this.description = description;
         this.employer = employer;
@@ -20,11 +21,14 @@ public class Office implements Serializable {
     private long id;
 
     @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
     private String address;
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "employer_id")
     private Employer employer;
 
@@ -34,6 +38,14 @@ public class Office implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getAddress() {
@@ -64,6 +76,7 @@ public class Office implements Serializable {
     public String toString() {
         return "Office{" +
                 "id=" + id +
+                ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
                 '}';

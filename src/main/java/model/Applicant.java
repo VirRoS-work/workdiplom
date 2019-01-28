@@ -11,25 +11,6 @@ public class Applicant implements Serializable{
     public Applicant() {
     }
 
-    public Applicant(String login, String password, String first_name, String last_name, String father_name, byte pol, Date date_of_birth, String email, String phone_number, PersonalData personal_data, Set<Language> languages, Specialization specialization, Set<Experience> experiences, Set<Education> educations, Set<Contact> contacts, Set<Summary> summaries) {
-        this.login = login;
-        this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.father_name = father_name;
-        this.pol = pol;
-        this.date_of_birth = date_of_birth;
-        this.email = email;
-        this.phone_number = phone_number;
-        this.personal_data = personal_data;
-        this.languages = languages;
-        this.specialization = specialization;
-        this.experiences = experiences;
-        this.educations = educations;
-        this.contacts = contacts;
-        this.summaries = summaries;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -49,24 +30,37 @@ public class Applicant implements Serializable{
     private String father_name;
 
     @Column(nullable = false)
-    private byte pol;
+    private Byte pol;
 
     private Date date_of_birth;
 
-    @Column(nullable = false)
-    private String email;
+    private Boolean ready_to_move;
 
-    @Column(nullable = false)
-    private String phone_number;
+    private Boolean ready_for_remove_work;
 
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private PersonalData personal_data;
+    private String City;
+
+    private String Citizenship;
+
+    private Byte family_status;
+
+    private Boolean childrens;
+
+    private String aboute_me;
+
+    private String hobby;
+
+    private Long salary;
+
+    private String academic_dergee;
+
+    private Byte status_summary;
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Language> languages;
+    private Set<LanguageSkill> languageSkills;
 
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Specialization specialization;
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<SpecializationApplicant> specializationApplicants;
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Experience> experiences;
@@ -75,10 +69,10 @@ public class Applicant implements Serializable{
     private Set<Education> educations;
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Contact> contacts;
+    private Set<ContactsApplicant> contacts;
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Summary> summaries;
+    private Set<SportSkill> sportSkills;
 
     public long getId() {
         return id;
@@ -128,11 +122,11 @@ public class Applicant implements Serializable{
         this.father_name = father_name;
     }
 
-    public byte getPol() {
+    public Byte getPol() {
         return pol;
     }
 
-    public void setPol(byte pol) {
+    public void setPol(Byte pol) {
         this.pol = pol;
     }
 
@@ -144,44 +138,108 @@ public class Applicant implements Serializable{
         this.date_of_birth = date_of_birth;
     }
 
-    public String getEmail() {
-        return email;
+    public Boolean getReady_to_move() {
+        return ready_to_move;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setReady_to_move(Boolean ready_to_move) {
+        this.ready_to_move = ready_to_move;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public Boolean getReady_for_remove_work() {
+        return ready_for_remove_work;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setReady_for_remove_work(Boolean ready_for_remove_work) {
+        this.ready_for_remove_work = ready_for_remove_work;
     }
 
-    public PersonalData getPersonal_data() {
-        return personal_data;
+    public String getCity() {
+        return City;
     }
 
-    public void setPersonal_data(PersonalData personal_data) {
-        this.personal_data = personal_data;
+    public void setCity(String city) {
+        City = city;
     }
 
-    public Set<Language> getLanguages() {
-        return languages;
+    public String getCitizenship() {
+        return Citizenship;
     }
 
-    public void setLanguages(Set<Language> languages) {
-        this.languages = languages;
+    public void setCitizenship(String citizenship) {
+        Citizenship = citizenship;
     }
 
-    public Specialization getSpecialization() {
-        return specialization;
+    public Byte getFamily_status() {
+        return family_status;
     }
 
-    public void setSpecialization(Specialization specialization) {
-        this.specialization = specialization;
+    public void setFamily_status(Byte family_status) {
+        this.family_status = family_status;
+    }
+
+    public Boolean getChildrens() {
+        return childrens;
+    }
+
+    public void setChildrens(Boolean childrens) {
+        this.childrens = childrens;
+    }
+
+    public String getAboute_me() {
+        return aboute_me;
+    }
+
+    public void setAboute_me(String aboute_me) {
+        this.aboute_me = aboute_me;
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public Long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+    public String getAcademic_dergee() {
+        return academic_dergee;
+    }
+
+    public void setAcademic_dergee(String academic_dergee) {
+        this.academic_dergee = academic_dergee;
+    }
+
+    public Byte getStatus_summary() {
+        return status_summary;
+    }
+
+    public void setStatus_summary(Byte status_summary) {
+        this.status_summary = status_summary;
+    }
+
+    public Set<LanguageSkill> getLanguageSkills() {
+        return languageSkills;
+    }
+
+    public void setLanguageSkills(Set<LanguageSkill> languageSkills) {
+        this.languageSkills = languageSkills;
+    }
+
+    public Set<SpecializationApplicant> getSpecializationApplicants() {
+        return specializationApplicants;
+    }
+
+    public void setSpecializationApplicants(Set<SpecializationApplicant> specializationApplicants) {
+        this.specializationApplicants = specializationApplicants;
     }
 
     public Set<Experience> getExperiences() {
@@ -192,14 +250,6 @@ public class Applicant implements Serializable{
         this.experiences = experiences;
     }
 
-    public Set<Summary> getSummaries() {
-        return summaries;
-    }
-
-    public void setSummaries(Set<Summary> summaries) {
-        this.summaries = summaries;
-    }
-
     public Set<Education> getEducations() {
         return educations;
     }
@@ -208,12 +258,20 @@ public class Applicant implements Serializable{
         this.educations = educations;
     }
 
-    public Set<Contact> getContacts() {
+    public Set<ContactsApplicant> getContacts() {
         return contacts;
     }
 
-    public void setContacts(Set<Contact> contacts) {
+    public void setContacts(Set<ContactsApplicant> contacts) {
         this.contacts = contacts;
+    }
+
+    public Set<SportSkill> getSportSkills() {
+        return sportSkills;
+    }
+
+    public void setSportSkills(Set<SportSkill> sportSkills) {
+        this.sportSkills = sportSkills;
     }
 
     @Override
@@ -227,14 +285,23 @@ public class Applicant implements Serializable{
                 ", father_name='" + father_name + '\'' +
                 ", pol=" + pol +
                 ", date_of_birth=" + date_of_birth +
-                ", email='" + email + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", personal_data=" + personal_data +
-                ", languages=" + languages +
-                ", specialization=" + specialization +
+                ", ready_to_move=" + ready_to_move +
+                ", ready_for_remove_work=" + ready_for_remove_work +
+                ", City='" + City + '\'' +
+                ", Citizenship='" + Citizenship + '\'' +
+                ", family_status=" + family_status +
+                ", childrens=" + childrens +
+                ", aboute_me='" + aboute_me + '\'' +
+                ", hobby='" + hobby + '\'' +
+                ", salary=" + salary +
+                ", academic_dergee='" + academic_dergee + '\'' +
+                ", status_summary=" + status_summary +
+                ", languageSkills=" + languageSkills +
+                ", specializationApplicants=" + specializationApplicants +
                 ", experiences=" + experiences +
                 ", educations=" + educations +
                 ", contacts=" + contacts +
+                ", sportSkills=" + sportSkills +
                 '}';
     }
 }

@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Language implements Serializable {
+public class Sport implements Serializable{
 
-    public Language() {
+    public Sport() {
     }
 
-    public Language(String name) {
+    public Sport(String name) {
         this.name = name;
     }
 
@@ -38,7 +38,7 @@ public class Language implements Serializable {
 
     @Override
     public String toString() {
-        return "Language{" +
+        return "Sport{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

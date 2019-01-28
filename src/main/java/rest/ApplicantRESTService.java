@@ -40,26 +40,6 @@ public class ApplicantRESTService {
     }
 
     @GET
-    @Path("/{id}/summaries")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplicantSummaries(@PathParam("id") String id){
-
-        Applicant applicant = service.getObjectByPk(Long.valueOf(id));
-
-        if(applicant != null) {
-
-            Set<Summary> summaries = applicant.getSummaries();
-
-            for(Summary summary : summaries){
-                summary.setApplicant(null);
-            }
-
-            return Response.ok(gson.toJson(summaries)).build();
-        }
-        return Response.status(204).build();
-    }
-
-    @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplicants(){
@@ -88,13 +68,16 @@ public class ApplicantRESTService {
         applicant.setLogin(null);
         applicant.setPassword(null);
 
-        if(applicant.getPersonal_data() != null) applicant.getPersonal_data().setApplicant(null);
-        if(applicant.getLanguages() != null){
-            for (Language obj: applicant.getLanguages()) {
+        if(applicant.getContacts() != null){
+            for (ContactsApplicant obj: applicant.getContacts()) {
                 obj.setApplicant(null);
             }
         }
-        if(applicant.getSpecialization() != null) applicant.getSpecialization().setApplicant(null);
+        if(applicant.getSpecializationApplicants() != null){
+            for (SpecializationApplicant obj: applicant.getSpecializationApplicants()) {
+                obj.setApplicant(null);
+            }
+        }
         if(applicant.getExperiences() != null){
             for (Experience obj: applicant.getExperiences()) {
                 obj.setApplicant(null);
@@ -105,12 +88,16 @@ public class ApplicantRESTService {
                 obj.setApplicant(null);
             }
         }
-        if(applicant.getContacts() != null){
-            for (Contact obj: applicant.getContacts()) {
+        if(applicant.getLanguageSkills() != null){
+            for (LanguageSkill obj: applicant.getLanguageSkills()) {
                 obj.setApplicant(null);
             }
         }
-        applicant.setSummaries(null);
+        if(applicant.getEducations() != null){
+            for (SportSkill obj: applicant.getSportSkills()) {
+                obj.setApplicant(null);
+            }
+        }
 
         return applicant;
     }

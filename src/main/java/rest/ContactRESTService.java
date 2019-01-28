@@ -84,7 +84,7 @@ public class ContactRESTService {
             cont.setEmployer(employer);
         }
 
-        cont.getContact_type().setContacts(null);
+//        cont.getContact_type().setContacts(null);
 
         return cont;
     }

@@ -22,7 +22,7 @@ public class EmployerService implements GenericService<Employer, Long> {
             session.save(employer);
         } else {
             Employer e = getObjectByPk(employer.getId());
-            if(e == null){
+            if(e != null){
                 employer.setLogin(e.getLogin());
                 employer.setPassword(e.getPassword());
                 session.update(employer);

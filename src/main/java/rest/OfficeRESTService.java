@@ -1,6 +1,7 @@
 package rest;
 
 import com.google.gson.Gson;
+import model.Employer;
 import model.Language;
 import model.Office;
 import service.GenericService;
@@ -24,10 +25,8 @@ public class OfficeRESTService {
 
         Office office = service.getObjectByPk(Long.valueOf(id));
 
-        if(office != null){
-            office.setEmployer(null);
-            return Response.ok(gson.toJson(office)).build();
-        }
+        if(office != null) return Response.ok(gson.toJson(getOffice(office))).build();
+
 
         return Response.status(204).build();
     }
@@ -50,7 +49,7 @@ public class OfficeRESTService {
 
         List<Office> offices = service.getAll();
         for (Office obj : offices) {
-            obj.setEmployer(null);
+            obj = getOffice(obj);
         }
 
         return Response.ok(gson.toJson(offices)).build();
@@ -64,5 +63,12 @@ public class OfficeRESTService {
         service.save(gson.fromJson(employer, Office.class));
 
         return Response.status(201).build();
+    }
+
+    private Office getOffice(Office office){
+        Employer employer = new Employer();
+        employer.setId(office.getEmployer().getId());
+        office.setEmployer(employer);
+        return office;
     }
 }

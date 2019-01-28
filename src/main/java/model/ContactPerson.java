@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class ContactPerson implements Serializable{
@@ -9,12 +10,12 @@ public class ContactPerson implements Serializable{
     public ContactPerson() {
     }
 
-    public ContactPerson(String first_name, String last_name, String father_name, String email, String phone_number) {
+    public ContactPerson(String first_name, String last_name, String father_name, Employer employer, Set<ContactsContactPerson> contacts) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.father_name = father_name;
-        this.email = email;
-        this.phone_number = phone_number;
+        this.employer = employer;
+        this.contacts = contacts;
     }
 
     @Id
@@ -29,10 +30,12 @@ public class ContactPerson implements Serializable{
 
     private String father_name;
 
-    @Column(nullable = false)
-    private String email;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "employer_id")
+    private Employer employer;
 
-    private String phone_number;
+    @OneToMany(mappedBy = "contact_person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<ContactsContactPerson> contacts;
 
     public long getId() {
         return id;
@@ -66,20 +69,20 @@ public class ContactPerson implements Serializable{
         this.father_name = father_name;
     }
 
-    public String getEmail() {
-        return email;
+    public Employer getEmployer() {
+        return employer;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public Set<ContactsContactPerson> getContacts() {
+        return contacts;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setContacts(Set<ContactsContactPerson> contacts) {
+        this.contacts = contacts;
     }
 
     @Override
@@ -89,8 +92,8 @@ public class ContactPerson implements Serializable{
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", father_name='" + father_name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone_number='" + phone_number + '\'' +
+                ", employer=" + employer +
+                ", contacts=" + contacts +
                 '}';
     }
 }

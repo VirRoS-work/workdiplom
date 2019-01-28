@@ -10,7 +10,7 @@ public class Vacancy implements Serializable{
     public Vacancy() {
     }
 
-    public Vacancy(byte status, String title, String description, long salary_min, long salary_max, boolean remove_work, byte type_employment, String field_of_activity, Employer employer, Set<Keyword> keywords) {
+    public Vacancy(String status, String title, String description, Long salary_min, Long salary_max, Boolean remove_work, String type_employment, Long experience_min, Employer employer, Office office, Set<SpecializationVacancy> fields) {
         this.status = status;
         this.title = title;
         this.description = description;
@@ -18,9 +18,10 @@ public class Vacancy implements Serializable{
         this.salary_max = salary_max;
         this.remove_work = remove_work;
         this.type_employment = type_employment;
-        this.field_of_activity = field_of_activity;
+        this.experience_min = experience_min;
         this.employer = employer;
-        this.keywords = keywords;
+        this.office = office;
+        this.fields = fields;
     }
 
     @Id
@@ -28,7 +29,7 @@ public class Vacancy implements Serializable{
     private long id;
 
     @Column(nullable = false)
-    private byte status;
+    private String status;
 
     @Column(nullable = false)
     private String title;
@@ -36,24 +37,26 @@ public class Vacancy implements Serializable{
     @Column(nullable = false)
     private String description;
 
-    private long salary_min;
+    private Long salary_min;
 
-    private long salary_max;
+    private Long salary_max;
 
-    private boolean remove_work;
+    private Boolean remove_work;
 
-    private byte type_employment;
+    private String type_employment;
 
-    private String field_of_activity;
+    private Long experience_min;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "employer_id")
     private Employer employer;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(joinColumns = @JoinColumn(name = "vacancy_id"),
-            inverseJoinColumns = @JoinColumn(name = "keyword_id"))
-    private Set<Keyword> keywords;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "office_id")
+    private Office office;
+
+    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<SpecializationVacancy> fields;
 
     public long getId() {
         return id;
@@ -63,11 +66,11 @@ public class Vacancy implements Serializable{
         this.id = id;
     }
 
-    public byte getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(byte status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -87,44 +90,44 @@ public class Vacancy implements Serializable{
         this.description = description;
     }
 
-    public long getSalary_min() {
+    public Long getSalary_min() {
         return salary_min;
     }
 
-    public void setSalary_min(long salary_min) {
+    public void setSalary_min(Long salary_min) {
         this.salary_min = salary_min;
     }
 
-    public long getSalary_max() {
+    public Long getSalary_max() {
         return salary_max;
     }
 
-    public void setSalary_max(long salary_max) {
+    public void setSalary_max(Long salary_max) {
         this.salary_max = salary_max;
     }
 
-    public boolean isRemove_work() {
+    public Boolean getRemove_work() {
         return remove_work;
     }
 
-    public void setRemove_work(boolean remove_work) {
+    public void setRemove_work(Boolean remove_work) {
         this.remove_work = remove_work;
     }
 
-    public byte getType_employment() {
+    public String getType_employment() {
         return type_employment;
     }
 
-    public void setType_employment(byte type_employment) {
+    public void setType_employment(String type_employment) {
         this.type_employment = type_employment;
     }
 
-    public String getField_of_activity() {
-        return field_of_activity;
+    public Long getExperience_min() {
+        return experience_min;
     }
 
-    public void setField_of_activity(String field_of_activity) {
-        this.field_of_activity = field_of_activity;
+    public void setExperience_min(Long experience_min) {
+        this.experience_min = experience_min;
     }
 
     public Employer getEmployer() {
@@ -135,12 +138,20 @@ public class Vacancy implements Serializable{
         this.employer = employer;
     }
 
-    public Set<Keyword> getKeywords() {
-        return keywords;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setKeywords(Set<Keyword> keywords) {
-        this.keywords = keywords;
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
+    public Set<SpecializationVacancy> getFields() {
+        return fields;
+    }
+
+    public void setFields(Set<SpecializationVacancy> fields) {
+        this.fields = fields;
     }
 
     @Override
@@ -154,9 +165,7 @@ public class Vacancy implements Serializable{
                 ", salary_max=" + salary_max +
                 ", remove_work=" + remove_work +
                 ", type_employment=" + type_employment +
-                ", field_of_activity='" + field_of_activity + '\'' +
-                ", employer=" + employer +
-                ", keywords=" + keywords +
+                ", experience_min=" + experience_min +
                 '}';
     }
 }
